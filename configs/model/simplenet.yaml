@@ -1,0 +1,22 @@
+model:
+  class_path: modules.SimpleNetModule
+# https://pytorch.org/docs/stable/optim.html
+optimizer:
+  class_path: AdamW
+  init_args:
+    lr: 0.001
+    weight_decay: 1e-6
+# https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+lr_scheduler:
+  class_path: ReduceLROnPlateau
+  init_args:
+    monitor: val/loss
+    mode: min
+    factor: 0.1
+    patience: 3
+    verbose: True
+    threshold: 0.0001
+    threshold_mode: rel
+    cooldown: 0
+    min_lr: 0.00001
+    eps: 1e-08

@@ -1,0 +1,11 @@
+data:
+  class_path: data_modules.MNISTDataModule
+  init_args:
+    data_dir: data
+    train_val_test_split:
+      - 55000
+      - 5000
+      - 10000
+    batch_size: 64
+    num_workers: 2
+    pin_memory: true

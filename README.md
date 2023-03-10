@@ -98,7 +98,11 @@ The advantages of using `Lightning`:
 │   │   └── cli.py           # CLI tool
 │   ├── __init__.py
 │   └── main.py              # Main program entry point
-├── LICENSE                  # Open-source license
+├── .env.example             # Example environment variable file
+├── .gitignore               # Ignore files for git
+├── .project-root            # Project root indicator file for pyrootutils
+├── LICENSE                  # Open source license
+├── pyproject.toml           # Configuration file for Black and Ruff
 ├── README.md                # Project documentation
 ├── README_PROJECT.md        # Project documentation template
 ├── README_ZH.md             # Project documentation in Chinese
@@ -121,7 +125,7 @@ conda activate <env_name>
 # [Optional] Use mamba instead of conda to speed up
 conda install mamba -n base -c conda-forge
 
-# [Optional] Install PyTorch according to the website to get GPU support 
+# [Optional] Install PyTorch according to the website to get GPU support
 # https://pytorch.org/get-started/
 
 # Install dependencies
@@ -188,13 +192,13 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 
 Using the `print_config` functionality of `jsonargparse`, you can obtain the parsed arguments and generate default `yaml` files. However, it is necessary to first configure the `yaml` files for `data` and `model`.
 
-```bash 
+```bash
 python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --print_config
 ```
 
 [Prepare a config file for the CLI](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_advanced.html#prepare-a-config-file-for-the-cli)
 
-### Customised `LightningCLI`
+### Customized `LightningCLI`
 
 This template implements a custom `CLI` (`CustomLightningCLI`) to achieve the following functions,
 
@@ -204,7 +208,7 @@ This template implements a custom `CLI` (`CustomLightningCLI`) to achieve the fo
 - Add some command line parameters:
     - `--ignore_warnings` (default: `False`): Ignore all warnings.
     - `--test_after_fit` (default: `False`): Automatically test after each training.
-    - `--git_commit_before_fit` (default: `False`): `git commit` before each training, the commit message is `{logger.name}_{logger.verison}`, for `WandbLogger` only.
+    - `--git_commit_before_fit` (default: `False`): `git commit` before each training, the commit message is `{logger.name}_{logger.version}`, for `WandbLogger` only.
 
 [CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_expert.html)
 

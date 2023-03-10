@@ -102,7 +102,7 @@ trainer:
   default_root_dir: null
   enable_progress_bar: true
   benchmark: null
-  deterministic: true
+  deterministic: false
   enable_checkpointing: true # overridden by ModelCheckpoint callback
   enable_model_summary: true # can be overridden by ModelSummary callback
   multiple_trainloader_mode: max_size_cycle

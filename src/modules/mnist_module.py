@@ -1,9 +1,8 @@
 # Adapted from: https://github.com/ashleve/lightning-hydra-template/blob/main/src/models/mnist_module.py
-from typing import Any, List
+from typing import Any
 
-import torch
-from torch.optim import AdamW
 import pytorch_lightning as pl
+import torch
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
@@ -12,19 +11,19 @@ from src.models import SimpleNet
 
 class SimpleNetModule(pl.LightningModule):
     """Example of LightningModule for MNIST classification.
-   A LightningModule organizes your PyTorch code into 6 sections:
-       - Computations (init)
-       - Train loop (training_step)
-       - Validation loop (validation_step)
-       - Test loop (test_step)
-       - Prediction Loop (predict_step)
-       - Optimizers and LR Schedulers (configure_optimizers)
-   Docs:
-       https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html
-   """
+    A LightningModule organizes your PyTorch code into 6 sections:
+        - Computations (init)
+        - Train loop (training_step)
+        - Validation loop (validation_step)
+        - Test loop (test_step)
+        - Prediction Loop (predict_step)
+        - Optimizers and LR Schedulers (configure_optimizers)
+    Docs:
+        https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html
+    """
 
     def __init__(
-            self,
+        self,
     ):
         super().__init__()
 
@@ -81,7 +80,7 @@ class SimpleNetModule(pl.LightningModule):
         # remember to always return loss from `training_step()` or backpropagation will fail!
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def training_epoch_end(self, outputs: List[Any]):
+    def training_epoch_end(self, outputs: list[Any]):
         # `outputs` is a list of dicts returned from `training_step()`
 
         # Warning: when overriding `training_epoch_end()`, lightning accumulates outputs from all batches of the epoch
@@ -104,7 +103,7 @@ class SimpleNetModule(pl.LightningModule):
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def validation_epoch_end(self, outputs: List[Any]):
+    def validation_epoch_end(self, outputs: list[Any]):
         acc = self.val_acc.compute()  # get current val acc
         self.val_acc_best(acc)  # update best so far val acc
         # log `val_acc_best` as a value through `.compute()` method, instead of as a metric object
@@ -122,10 +121,10 @@ class SimpleNetModule(pl.LightningModule):
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def test_epoch_end(self, outputs: List[Any]):
+    def test_epoch_end(self, outputs: list[Any]):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     m = SimpleNetModule()
     print(m)

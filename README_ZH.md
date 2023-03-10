@@ -95,9 +95,13 @@
 │   │   └── cli.py           # CLI工具
 │   ├── __init__.py
 │   └── main.py              # 程序主入口
+├── .env.example             # 环境变量示例
+├── .gitignore               # Git忽略列表
+├── .project-root            # pyrootutils项目根目录指示文件
 ├── LICENSE                  # 开源协议
-├── README.md                # 本项目说明
+├── pyproject.toml           # Black和Ruff的配置文件
 ├── README_PROJECT.md        # 项目说明模板
+├── README.md                # 本项目说明
 ├── README_ZH.md             # 本项目说明（中文）
 └── requirements.txt         # 依赖列表
 ```
@@ -185,7 +189,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 
 利用`jsonargparse`的`print_config`功能，可以获得解析的参数，生成默认`yaml`文件等，不过需要先配置好`data`和`model`的`yaml`文件，
 
-```bash 
+```bash
 python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --print_config
 ```
 
@@ -201,7 +205,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 - 添加了一些命令行参数：
     - `--ignore_warnings`（默认： `False`）：忽略全部警告
     - `--test_after_fit`（默认： `False`）：每次训练完成后，自动测试一遍
-    - `--git_commit_before_fit`（默认： `False`）：每次训练之前`git commit`一下，`commit`的信息为`{logger.name}_{logger.verison}`, 仅实现了对`WandbLogger`的适配
+    - `--git_commit_before_fit`（默认： `False`）：每次训练之前`git commit`一下，`commit`的信息为`{logger.name}_{logger.version}`, 仅实现了对`WandbLogger`的适配
 
 [CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_expert.html)
 

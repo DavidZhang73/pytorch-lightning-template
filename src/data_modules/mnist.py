@@ -1,12 +1,10 @@
 # Adapted from: https://github.com/ashleve/lightning-hydra-template/blob/main/src/data/mnist_datamodule.py
-from typing import Tuple, Optional, Dict, Any
-
-import torch
-from torchvision.datasets import MNIST
-from torchvision.transforms import transforms as T
-from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
+from typing import Any
 
 import pytorch_lightning as pl
+from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
+from torchvision.datasets import MNIST
+from torchvision.transforms import transforms as T
 
 
 class MNISTDataModule(pl.LightningDataModule):
@@ -34,12 +32,12 @@ class MNISTDataModule(pl.LightningDataModule):
     """
 
     def __init__(
-            self,
-            data_dir: str = "data",
-            train_val_test_split: Tuple[int, int, int] = (55_000, 5_000, 10_000),
-            batch_size: int = 64,
-            num_workers: int = 0,
-            pin_memory: bool = False,
+        self,
+        data_dir: str = "data",
+        train_val_test_split: tuple[int, int, int] = (55_000, 5_000, 10_000),
+        batch_size: int = 64,
+        num_workers: int = 0,
+        pin_memory: bool = False,
     ):
         super().__init__()
 
@@ -48,13 +46,11 @@ class MNISTDataModule(pl.LightningDataModule):
         self.save_hyperparameters()
 
         # data transformations
-        self.transforms = T.Compose(
-            [T.ToTensor(), T.Normalize((0.1307,), (0.3081,))]
-        )
+        self.transforms = T.Compose([T.ToTensor(), T.Normalize((0.1307,), (0.3081,))])
 
-        self.data_train: Optional[Dataset] = None
-        self.data_val: Optional[Dataset] = None
-        self.data_test: Optional[Dataset] = None
+        self.data_train: Dataset = None
+        self.data_val: Dataset = None
+        self.data_test: Dataset = None
 
     @property
     def num_classes(self):
@@ -67,7 +63,7 @@ class MNISTDataModule(pl.LightningDataModule):
         MNIST(self.hparams.data_dir, train=True, download=True)
         MNIST(self.hparams.data_dir, train=False, download=True)
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str = None):
         """Load data. Set variables: `self.data_train`, `self.data_val`, `self.data_test`.
         This method is called by lightning with both `trainer.fit()` and `trainer.test()`, so be
         careful not to execute things like random split twice!
@@ -109,7 +105,7 @@ class MNISTDataModule(pl.LightningDataModule):
             shuffle=False,
         )
 
-    def teardown(self, stage: Optional[str] = None):
+    def teardown(self, stage: str = None):
         """Clean up after fit or test."""
         pass
 
@@ -117,7 +113,7 @@ class MNISTDataModule(pl.LightningDataModule):
         """Extra things to save to checkpoint."""
         return {}
 
-    def load_state_dict(self, state_dict: Dict[str, Any]):
+    def load_state_dict(self, state_dict: dict[str, Any]):
         """Things to do when loading checkpoint."""
         pass
 

@@ -28,7 +28,7 @@ class MNISTDataModule(pl.LightningDataModule):
     This allows you to share a full dataset without explaining how to download,
     split, transform and process the data.
     Read the docs:
-        https://pytorch-lightning.readthedocs.io/en/latest/data/datamodule.html
+        https://lightning.ai/docs/pytorch/latest/data/datamodule.html
     """
 
     def __init__(

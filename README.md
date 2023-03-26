@@ -14,11 +14,11 @@ English | [中文](./README_ZH.md)
 
 ## Introduction
 
-[PyTorch Lightning](https://pytorch-lightning.readthedocs.io/en/stable/) is to deep learning project development as [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) frameworks (such as [Spring](https://spring.io/), [Django](https://www.djangoproject.com/), etc.) are to website development. While it is possible to implement everything from scratch and achieve maximum flexibility (especially since [PyTorch](https://pytorch.org/) and its ecosystem are already quite straightforward), using a framework can help you quickly implement prototypes with guidance from ["best practices"](#best-practice) (personal opinion) to save a lot of boilerplate code through re-usability, and focus on scientific innovation rather than engineering challenges. This template is built using the full Lightning suite, follows the principle of [Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor), and is friendly to researchers. It also includes a simple handwritten digit recognition task using the MNIST dataset. The repository also contains some [Tips](#tips), for reference.
+[PyTorch Lightning](https://lightning.ai/docs/pytorch/stable/) is to deep learning project development as [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) frameworks (such as [Spring](https://spring.io/), [Django](https://www.djangoproject.com/), etc.) are to website development. While it is possible to implement everything from scratch and achieve maximum flexibility (especially since [PyTorch](https://pytorch.org/) and its ecosystem are already quite straightforward), using a framework can help you quickly implement prototypes with guidance from ["best practices"](#best-practice) (personal opinion) to save a lot of boilerplate code through re-usability, and focus on scientific innovation rather than engineering challenges. This template is built using the full Lightning suite, follows the principle of [Occam's razor](https://en.wikipedia.org/wiki/Occam%27s_razor), and is friendly to researchers. It also includes a simple handwritten digit recognition task using the MNIST dataset. The repository also contains some [Tips](#tips), for reference.
 
 ## "Best Practice"
 
-### Using [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/stable/) as a deep learning framework:
+### Using [Pytorch Lightning](https://lightning.ai/docs/pytorch/stable/) as a deep learning framework:
 
 Most of the deep learning code can be divided into the following three parts([Reference [Chinese]](https://zhuanlan.zhihu.com/p/120331610)):
 
@@ -30,15 +30,15 @@ Most of the deep learning code can be divided into the following three parts([Re
 
 The advantages of using `Lightning`:
 
-1. Custom training processes and learning rate adjustment strategies can be implemented through various [hook functions](https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html#hooks) in `pl.LightningModule`.
+1. Custom training processes and learning rate adjustment strategies can be implemented through various [hook functions](https://lightning.ai/docs/pytorch/stable/common/lightning_module.html#hooks) in `pl.LightningModule`.
 
-2. The model and data no longer need to be explicitly designated for devices (`tensor.to`, `tensor.cuda`, etc.). `pl.Trainer` handles this automatically, thereby supporting various [acceleration devices such as CPU, GPU, and TPU](https://pytorch-lightning.readthedocs.io/en/latest/extensions/accelerator.html).
+2. The model and data no longer need to be explicitly designated for devices (`tensor.to`, `tensor.cuda`, etc.). `pl.Trainer` handles this automatically, thereby supporting various [acceleration devices such as CPU, GPU, and TPU](https://lightning.ai/docs/pytorch/latest/extensions/accelerator.html).
 
-3. `pl.Trainer` implements various [training strategies](https://pytorch-lightning.readthedocs.io/en/latest/extensions/strategy.html), such as automatic mixed precision training, multi-GPU training, and distributed training.
+3. `pl.Trainer` implements various [training strategies](https://lightning.ai/docs/pytorch/latest/extensions/strategy.html), such as automatic mixed precision training, multi-GPU training, and distributed training.
 
-4. `pl.Trainer` implements multiple [callbacks](https://pytorch-lightning.readthedocs.io/en/latest/extensions/callbacks.html) such as automatic model saving, automatic config saving, and automatic visualization result saving.
+4. `pl.Trainer` implements multiple [callbacks](https://lightning.ai/docs/pytorch/latest/extensions/callbacks.html) such as automatic model saving, automatic config saving, and automatic visualization result saving.
 
-### Using [Pytorch Lightning CLI](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli.html#lightning-cli) as a command-line tool:
+### Using [Pytorch Lightning CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli.html#lightning-cli) as a command-line tool:
 
 1. Using `lightning_cli` as the program entry point, model, data, and training parameters can be set through configuration files or command-line parameters, thereby achieving quick switching between multiple experiments.
 
@@ -168,12 +168,6 @@ python src/main.py test -c configs/data/mnist.yaml -c configs/model/simplenet.ya
 python src/main.py predict -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --trainer.logger.name exp1
 ```
 
-**Tune**
-
-```bash
-python src/main.py tune -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --trainer.logger false
-```
-
 **Debug**
 
 ```bash
@@ -196,7 +190,7 @@ Using the `print_config` functionality of `jsonargparse`, you can obtain the par
 python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --print_config
 ```
 
-[Prepare a config file for the CLI](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_advanced.html#prepare-a-config-file-for-the-cli)
+[Prepare a config file for the CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_advanced.html#prepare-a-config-file-for-the-cli)
 
 ### Customized `LightningCLI`
 
@@ -210,7 +204,7 @@ This template implements a custom `CLI` (`CustomLightningCLI`) to achieve the fo
     - `--test_after_fit` (default: `False`): Automatically test after each training.
     - `--git_commit_before_fit` (default: `False`): `git commit` before each training, the commit message is `{logger.name}_{logger.version}`, for `WandbLogger` only.
 
-[CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_expert.html)
+[CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_expert.html)
 
 ### Limit `numpy` number of threads
 

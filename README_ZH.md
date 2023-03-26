@@ -14,11 +14,11 @@
 
 ## 介绍
 
-[Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/stable/)之于深度学习项目开发就如同[MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)框架（例如[Spring](https://spring.io/)，[Django](https://www.djangoproject.com/)等）之于网站开发。你当然可以手写所有实现并获得最大的灵活度（尤其是[PyTorch](https://pytorch.org/)及其生态已经足够简单），但使用框架能够帮助你在已有[“最佳实践”](#最佳实践)（仅代表个人观点）的指导下快速实现原型，通过复用省去大量模板代码（boilerplate），从而专注于科研创新而不是工程难题。该模板使用`lightning`全家桶构建，尽量遵循[奥卡姆剃刀原则](https://zh.wikipedia.org/zh-hans/%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80)以及对科研人员友好，并实现了一个简单的手写数字识别任务[MNIST](https://en.wikipedia.org/wiki/MNIST_database)。该仓库还记录了一些在使用过程中的[Tips](#tips)，以供参考。
+[Pytorch Lightning](https://lightning.ai/docs/pytorch/stable/)之于深度学习项目开发就如同[MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)框架（例如[Spring](https://spring.io/)，[Django](https://www.djangoproject.com/)等）之于网站开发。你当然可以手写所有实现并获得最大的灵活度（尤其是[PyTorch](https://pytorch.org/)及其生态已经足够简单），但使用框架能够帮助你在已有[“最佳实践”](#最佳实践)（仅代表个人观点）的指导下快速实现原型，通过复用省去大量模板代码（boilerplate），从而专注于科研创新而不是工程难题。该模板使用`lightning`全家桶构建，尽量遵循[奥卡姆剃刀原则](https://zh.wikipedia.org/zh-hans/%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80)以及对科研人员友好，并实现了一个简单的手写数字识别任务[MNIST](https://en.wikipedia.org/wiki/MNIST_database)。该仓库还记录了一些在使用过程中的[Tips](#tips)，以供参考。
 
 ## “最佳实践”
 
-### 使用 [Pytorch Lightning](https://pytorch-lightning.readthedocs.io/en/stable/) 作为深度学习框架
+### 使用 [Pytorch Lightning](https://lightning.ai/docs/pytorch/stable/) 作为深度学习框架
 
 大部分的深度学习的代码都可以分为以下这三部分（[参考](https://zhuanlan.zhihu.com/p/120331610)）：
 
@@ -31,12 +31,12 @@
 
 `Lightning`的优势有：
 
-1. 通过`pl.LightningModule`中的各种[钩子函数（hook）](https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html#hooks)，可以实现自定义的训练过程，自定义的学习率调整策略等
-2. 模型和数据不再需要显式地指定设备（`tensor.to`，`tensor.cuda`等），`pl.Trainer`会自动处理，从而支持各种[加速设备（CPU，GPU，TPU 等）](https://pytorch-lightning.readthedocs.io/en/latest/extensions/accelerator.html)
-3. `pl.Trainer`实现了多种[训练策略](https://pytorch-lightning.readthedocs.io/en/latest/extensions/strategy.html)，如自动混合精度训练，多卡训练，分布式训练等
-4. `pl.Trainer`实现了多种[回调（callback）](https://pytorch-lightning.readthedocs.io/en/latest/extensions/callbacks.html)，如自动保存模型，自动保存日志，自动保存可视化结果等
+1. 通过`pl.LightningModule`中的各种[钩子函数（hook）](https://lightning.ai/docs/pytorch/stable/common/lightning_module.html#hooks)，可以实现自定义的训练过程，自定义的学习率调整策略等
+2. 模型和数据不再需要显式地指定设备（`tensor.to`，`tensor.cuda`等），`pl.Trainer`会自动处理，从而支持各种[加速设备（CPU，GPU，TPU 等）](https://lightning.ai/docs/pytorch/latest/extensions/accelerator.html)
+3. `pl.Trainer`实现了多种[训练策略](https://lightning.ai/docs/pytorch/latest/extensions/strategy.html)，如自动混合精度训练，多卡训练，分布式训练等
+4. `pl.Trainer`实现了多种[回调（callback）](https://lightning.ai/docs/pytorch/latest/extensions/callbacks.html)，如自动保存模型，自动保存日志，自动保存可视化结果等
 
-### 使用 [Pytorch Lightning CLI](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli.html#lightning-cli) 作为命令行工具
+### 使用 [Pytorch Lightning CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli.html#lightning-cli) 作为命令行工具
 
 1. 使用`lightning_cli`作为程序入口，可以通过配置文件或命令行参数设置模型、数据、训练等参数，从而实现多个实验的快速切换
 2. 使用`pl.LightningModule.save_hyperparameters()`保存模型的超参数，自动生成命令行参数表，无需用[`argparse`](https://docs.python.org/3/library/argparse.html)或[`hydra`](https://hydra.cc/)等工具手动实现
@@ -131,13 +131,13 @@ pip install -r requirements.txt
 
 ### 配置
 
-1. 在`src/data_module`中继承[`pl.LightningDataModule`](https://pytorch-lightning.readthedocs.io/en/stable/data/datamodule.html)定义数据集
+1. 在`src/data_module`中继承[`pl.LightningDataModule`](https://lightning.ai/docs/pytorch/stable/data/datamodule.html)定义数据集
 2. 在`configs/data`中定义数据集的配置文件(作为自定义的`pl.LightningDataModule`的参数)
 3. 在`src/models`中继承`nn.Module`定义模型
 4. 在`src/metrics`中继承[`torchmetrics.Metric`](https://torchmetrics.readthedocs.io/en/stable/pages/implement.html)定义指标
-5. 在`src/modules`中继承[`pl.LightningModule`](https://pytorch-lightning.readthedocs.io/en/stable/common/lightning_module.html)定义训练模块
+5. 在`src/modules`中继承[`pl.LightningModule`](https://lightning.ai/docs/pytorch/stable/common/lightning_module.html)定义训练模块
 6. 在`configs/model`中定义训练模块的配置文件(作为自定义的`pl.LightningModule`的参数)
-7. 配置`configs/default.yaml`中的[`pl.trainer`](https://pytorch-lightning.readthedocs.io/en/stable/common/pl.trainer.html)，日志等参数
+7. 配置`configs/default.yaml`中的[`pl.trainer`](https://lightning.ai/docs/pytorch/stable/common/pl.trainer.html)，日志等参数
 
 ### 运行
 
@@ -165,12 +165,6 @@ python src/main.py test -c configs/data/mnist.yaml -c configs/model/simplenet.ya
 python src/main.py predict -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --trainer.logger.name exp1
 ```
 
-**微调**
-
-```bash
-python src/main.py tune -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --trainer.logger false
-```
-
 **调试**
 
 ```bash
@@ -193,7 +187,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yaml --print_config
 ```
 
-[Prepare a config file for the CLI](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_advanced.html#prepare-a-config-file-for-the-cli)
+[Prepare a config file for the CLI](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_advanced.html#prepare-a-config-file-for-the-cli)
 
 ### 自定义`LightningCLI`
 
@@ -207,7 +201,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
     - `--test_after_fit`（默认： `False`）：每次训练完成后，自动测试一遍
     - `--git_commit_before_fit`（默认： `False`）：每次训练之前`git commit`一下，`commit`的信息为`{logger.name}_{logger.version}`, 仅实现了对`WandbLogger`的适配
 
-[CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://pytorch-lightning.readthedocs.io/en/stable/cli/lightning_cli_expert.html)
+[CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_expert.html)
 
 ### 限制`numpy`的进程数量
 

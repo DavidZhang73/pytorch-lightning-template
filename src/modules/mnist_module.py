@@ -19,7 +19,7 @@ class SimpleNetModule(pl.LightningModule):
         - Prediction Loop (predict_step)
         - Optimizers and LR Schedulers (configure_optimizers)
     Docs:
-        https://pytorch-lightning.readthedocs.io/en/latest/common/lightning_module.html
+        https://lightning.ai/docs/pytorch/latest/common/lightning_module.html
     """
 
     def __init__(
@@ -80,7 +80,7 @@ class SimpleNetModule(pl.LightningModule):
         # remember to always return loss from `training_step()` or backpropagation will fail!
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def training_epoch_end(self, outputs: list[Any]):
+    def on_train_epoch_end(self):
         # `outputs` is a list of dicts returned from `training_step()`
 
         # Warning: when overriding `training_epoch_end()`, lightning accumulates outputs from all batches of the epoch
@@ -103,7 +103,7 @@ class SimpleNetModule(pl.LightningModule):
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def validation_epoch_end(self, outputs: list[Any]):
+    def on_validation_epoch_end(self):
         acc = self.val_acc.compute()  # get current val acc
         self.val_acc_best(acc)  # update best so far val acc
         # log `val_acc_best` as a value through `.compute()` method, instead of as a metric object
@@ -121,7 +121,7 @@ class SimpleNetModule(pl.LightningModule):
 
         return {"loss": loss, "preds": preds, "targets": targets}
 
-    def test_epoch_end(self, outputs: list[Any]):
+    def on_test_epoch_end(self):
         pass
 
 

@@ -1,10 +1,10 @@
-# Global Seed # https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#reproducibility
+# Global Seed # https://lightning.ai/docs/pytorch/stable/common/trainer.html#reproducibility
 seed_everything: 3407
 # Custom
 ignore_warnings: false # Ignore warnings
 test_after_fit: true # Apply test after fit finished
 git_commit_before_fit: false # Commit before fit
-# Trainer Config https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html
+# Trainer Config https://lightning.ai/docs/pytorch/stable/common/trainer.html
 trainer:
   # Train, Validate, Test and Predict
   max_epochs: -1
@@ -24,18 +24,15 @@ trainer:
   limit_test_batches: null
   limit_predict_batches: null
 
-  # Tune
-  auto_lr_find: false
-  auto_scale_batch_size: false
-
-  # Device https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#accelerator
-  accelerator: auto # "cpu", "gpu", "tpu", "ipu", "auto"
+  # Device https://lightning.ai/docs/pytorch/stable/common/trainer.html#accelerator
+  accelerator: gpu # "cpu", "gpu", "tpu", "ipu", "auto"
   devices: 1 # "2," for device id 2
+  num_nodes: 1 # https://lightning.ai/docs/pytorch/stable/common/trainer.html#num-nodes
 
-  # Logger https://pytorch-lightning.readthedocs.io/en/latest/visualize/loggers.html
-  # https://pytorch-lightning.readthedocs.io/en/latest/api_references.html#loggers
+  # Logger https://lightning.ai/docs/pytorch/latest/visualize/loggers.html
+  # https://lightning.ai/docs/pytorch/latest/api_references.html#loggers
   logger:
-    # https://pytorch-lightning.readthedocs.io/en/latest/api/lightning.pytorch.loggers.wandb.html#module-lightning.pytorch.loggers.wandb
+    # https://lightning.ai/docs/pytorch/latest/api/lightning.pytorch.loggers.wandb.html#module-lightning.pytorch.loggers.wandb
     class_path: WandbLogger
     init_args:
       save_dir: logs
@@ -43,9 +40,9 @@ trainer:
       log_model: false
   log_every_n_steps: 50
 
-  # Callbacks https://pytorch-lightning.readthedocs.io/en/latest/extensions/callbacks.html
+  # Callbacks https://lightning.ai/docs/pytorch/latest/extensions/callbacks.html
   callbacks:
-    # https://pytorch-lightning.readthedocs.io/en/latest/api/lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint
+    # https://lightning.ai/docs/pytorch/latest/api/lightning.pytorch.callbacks.ModelCheckpoint.html#lightning.pytorch.callbacks.ModelCheckpoint
     - class_path: ModelCheckpoint
       init_args:
         filename: epoch={epoch:02d}-val_acc={val/acc:.4f}
@@ -55,7 +52,7 @@ trainer:
         save_top_k: 2
         mode: max
         auto_insert_metric_name: false
-    # https://pytorch-lightning.readthedocs.io/en/latest/api/lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping
+    # https://lightning.ai/docs/pytorch/latest/api/lightning.pytorch.callbacks.EarlyStopping.html#lightning.pytorch.callbacks.EarlyStopping
     - class_path: EarlyStopping
       init_args:
         monitor: val/acc
@@ -64,38 +61,37 @@ trainer:
         verbose: true
         mode: max
         strict: true
-    # https://pytorch-lightning.readthedocs.io/en/latest/api/lightning.pytorch.callbacks.LearningRateMonitor.html#lightning.pytorch.callbacks.LearningRateMonitor
+    # https://lightning.ai/docs/pytorch/latest/api/lightning.pytorch.callbacks.LearningRateMonitor.html#lightning.pytorch.callbacks.LearningRateMonitor
     - class_path: LearningRateMonitor
       init_args:
         logging_interval: epoch
-    # https://pytorch-lightning.readthedocs.io/en/stable/api/pytorch_lightning.callbacks.RichModelSummary.html
+    # https://lightning.ai/docs/pytorch/stable/api/pytorch_lightning.callbacks.RichModelSummary.html
     - class_path: RichModelSummary
       init_args:
         max_depth: 1
 
   # Distributed
-  strategy: null # https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#strategy
-  sync_batchnorm: true # https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#sync-batchnorm
-  replace_sampler_ddp: true # https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#replace-sampler-ddp
+  strategy: auto # https://lightning.ai/docs/pytorch/stable/common/trainer.html#strategy
+  sync_batchnorm: true # https://lightning.ai/docs/pytorch/stable/common/trainer.html#sync-batchnorm
+  use_distributed_sampler: True # https://lightning.ai/docs/pytorch/stable/common/trainer.html#lightning.pytorch.trainer.Trainer.params.use_distributed_sampler
 
-  # Gradient Clipping https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#gradient-clip-val
+  # Gradient Clipping https://lightning.ai/docs/pytorch/stable/common/trainer.html#gradient-clip-val
   gradient_clip_val: null
   gradient_clip_algorithm: null
 
-  # Gradient Accumulation https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#accumulate-grad-batches
-  accumulate_grad_batches: null
+  # Gradient Accumulation https://lightning.ai/docs/pytorch/stable/common/trainer.html#accumulate-grad-batches
+  accumulate_grad_batches: 1
 
-  # Precision https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#precision
-  precision: 32
+  # Precision https://lightning.ai/docs/pytorch/stable/common/trainer.html#precision
+  precision: 32-true
 
-  # Plugins https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#plugins
+  # Plugins https://lightning.ai/docs/pytorch/stable/common/trainer.html#plugins
   plugins: null
 
   # Debug
-  fast_dev_run: false # https://pytorch-lightning.readthedocs.io/en/stable/common/trainer.html#fast-dev-run
-  profiler: null # https://pytorch-lightning.readthedocs.io/en/stable/api_references.html#profiler
+  fast_dev_run: false # https://lightning.ai/docs/pytorch/stable/common/trainer.html#fast-dev-run
+  profiler: null # https://lightning.ai/docs/pytorch/stable/api_references.html#profiler
   detect_anomaly: false
-  track_grad_norm: -1
   reload_dataloaders_every_n_epochs: 0
 
   # Misc
@@ -104,17 +100,4 @@ trainer:
   benchmark: null
   deterministic: false
   enable_checkpointing: true # overridden by ModelCheckpoint callback
-  enable_model_summary: true # can be overridden by ModelSummary callback
-  multiple_trainloader_mode: max_size_cycle
-  move_metrics_to_cpu: false
-
-  # Deprecated
-  gpus: null
-  tpu_cores: null
-  num_nodes: 1
-  num_processes: null
-  ipus: null
-  auto_select_gpus: null
-  resume_from_checkpoint: null
-  amp_backend: null
-  amp_level: null
+  enable_model_summary: false # can be overridden by ModelSummary callback

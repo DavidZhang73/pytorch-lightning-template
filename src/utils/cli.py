@@ -56,7 +56,7 @@ class CustomLightningCLI(LightningCLI):
     ) -> None:
         new_parser_kwargs = {
             sub_command: dict(default_config_files=[os.path.join("configs", "default.yaml")])
-            for sub_command in ["fit", "validate", "test", "predict", "tune"]
+            for sub_command in ["fit", "validate", "test", "predict"]
         }
         new_parser_kwargs.update(parser_kwargs or {})
         super().__init__(save_config_callback=save_config_callback, parser_kwargs=new_parser_kwargs, **kwargs)

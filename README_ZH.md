@@ -194,6 +194,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 该模板实现了一个自定义的`CLI`(`CustomLightningCLI`)以实现以下功能，
 
 - 每次启动时，自动保存配置文件到对应的日志文件目录下, 仅实现了对`WandbLogger`的适配
+- 每次启动时，把`optimizer`和`lr_scheduler`的参数保存到`Loggers`中
 - 每次启动时，自动加载默认配置文件
 - 测试完成后，打印测试使用的`checkpoint_path`
 - 添加了一些命令行参数：

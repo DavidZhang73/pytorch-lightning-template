@@ -4,8 +4,12 @@ from typing import Any
 
 from lightning_fabric.utilities.cloud_io import get_filesystem
 from pytorch_lightning import LightningModule, Trainer
-from pytorch_lightning.cli import LightningArgumentParser, LightningCLI, SaveConfigCallback
-from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning.cli import (
+    LightningArgumentParser,
+    LightningCLI,
+    SaveConfigCallback,
+)
+from pytorch_lightning.loggers import Logger, WandbLogger
 
 
 class WandbSaveConfigCallback(SaveConfigCallback):
@@ -42,6 +46,19 @@ class WandbSaveConfigCallback(SaveConfigCallback):
                 self.config, config_path, skip_none=False, overwrite=self.overwrite, multifile=self.multifile
             )
             self.already_saved = True
+            # save optimizer and lr scheduler config
+            for _logger in trainer.loggers:
+                if isinstance(_logger, Logger):
+                    config = {}
+                    if "optimizer" in self.config:
+                        config["optimizer"] = {
+                            k.replace("init_args.", ""): v for k, v in dict(self.config["optimizer"]).items()
+                        }
+                    if "lr_scheduler" in self.config:
+                        config["lr_scheduler"] = {
+                            k.replace("init_args.", ""): v for k, v in dict(self.config["lr_scheduler"]).items()
+                        }
+                    _logger.log_hyperparams(config)
 
         # broadcast so that all ranks are in sync on future calls to .setup()
         self.already_saved = trainer.strategy.broadcast(self.already_saved)

@@ -94,7 +94,7 @@ class CustomLightningCLI(LightningCLI):
             logger = self.trainer.logger
             if isinstance(logger, WandbLogger):
                 version = getattr(logger, "version")
-                name = getattr(logger, "name")
+                name = getattr(logger, "_name")
                 message = "Commit Message"
                 if name and version:
                     message = f"{name}_{version}"

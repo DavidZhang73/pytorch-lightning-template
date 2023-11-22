@@ -197,6 +197,7 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 This template implements a custom `CLI` (`CustomLightningCLI`) to achieve the following functions,
 
 - When starting the program, the configuration file is automatically saved to the corresponding log directory, for `WandbLogger` only.
+- When starting the program, save configurations for optimizer and scheduler to loggers.
 - When starting the program, the default configuration file is automatically loaded.
 - After the test is completed, the `checkpoint_path` used for testing is printed.
 - Add some command line parameters:

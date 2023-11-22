@@ -1,13 +1,11 @@
-# https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html
-[tool.black]
-line-length = 120
-
-# https://beta.ruff.rs/docs/settings/
+# https://docs.astral.sh/docs/settings/
 [tool.ruff]
 line-length = 120
-# https://beta.ruff.rs/docs/rules/
-select = ["E", "W", "F"]
+select = [
+    "F",  # pyflakes
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "I",  # isort
+    "UP", # pyupgrade
+]
 ignore = ["F401"]
-# Exclude a variety of commonly ignored directories.
-respect-gitignore = true
-ignore-init-module-imports = true

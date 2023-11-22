@@ -100,5 +100,5 @@ trainer:
   benchmark: null
   deterministic: false
   enable_progress_bar: true
-  enable_checkpointing: false # overridden by ModelCheckpoint callback
-  enable_model_summary: false # can be overridden by ModelSummary callback
+  enable_checkpointing: true
+  enable_model_summary: true

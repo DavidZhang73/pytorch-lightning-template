@@ -19,7 +19,7 @@ class WandbSaveConfigCallback(SaveConfigCallback):
 
         log_dir = trainer.log_dir  # this broadcasts the directory
         if trainer.logger is not None and trainer.logger.name is not None and trainer.logger.version is not None:
-            log_dir = os.path.join(log_dir, trainer.logger.name, trainer.logger.version)
+            log_dir = os.path.join(log_dir, trainer.logger.name, str(trainer.logger.version))
         config_path = os.path.join(log_dir, self.config_filename)
         fs = get_filesystem(log_dir)
 
@@ -108,7 +108,7 @@ class CustomLightningCLI(LightningCLI):
         if self.config.fit.get("test_after_fit"):
             self._run_subcommand("test")
 
-    def after_test(self) -> None:
+    def before_test(self) -> None:
         if self.trainer.ckpt_path:
             tested_ckpt_path = self.trainer.ckpt_path
         elif self.trainer.checkpoint_callback and self.trainer.checkpoint_callback.best_model_path:

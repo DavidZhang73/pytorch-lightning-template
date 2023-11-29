@@ -109,13 +109,13 @@ class CustomLightningCLI(LightningCLI):
             self._run_subcommand("test")
 
     def before_test(self) -> None:
-        if self.trainer.ckpt_path:
-            tested_ckpt_path = self.trainer.ckpt_path
+        if self.config_init[self.config_init["subcommand"]]["ckpt_path"]:
+            return
         elif self.trainer.checkpoint_callback and self.trainer.checkpoint_callback.best_model_path:
             tested_ckpt_path = self.trainer.checkpoint_callback.best_model_path
         else:
             tested_ckpt_path = None
-        print("Tested on checkpoint:", tested_ckpt_path)
+        self.config_init[self.config_init["subcommand"]]["ckpt_path"] = tested_ckpt_path
 
     def _prepare_subcommand_kwargs(self, subcommand: str) -> dict[str, Any]:
         """Prepares the keyword arguments to pass to the subcommand to run."""

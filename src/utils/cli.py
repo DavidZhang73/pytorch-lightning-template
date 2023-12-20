@@ -109,10 +109,10 @@ class CustomLightningCLI(LightningCLI):
             self._run_subcommand("test")
 
     def before_test(self) -> None:
-        if self.config_init[self.config_init["subcommand"]]["ckpt_path"]:
-            return
-        elif self.trainer.checkpoint_callback and self.trainer.checkpoint_callback.best_model_path:
+        if self.trainer.checkpoint_callback and self.trainer.checkpoint_callback.best_model_path:
             tested_ckpt_path = self.trainer.checkpoint_callback.best_model_path
+        elif self.config_init[self.config_init["subcommand"]]["ckpt_path"]:
+            return
         else:
             tested_ckpt_path = None
         self.config_init[self.config_init["subcommand"]]["ckpt_path"] = tested_ckpt_path

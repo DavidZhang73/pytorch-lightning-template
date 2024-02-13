@@ -1,15 +1,19 @@
 import os
 import warnings
-from typing import Any
+from typing import Any, Optional
 
 from lightning_fabric.utilities.cloud_io import get_filesystem
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.cli import (
     LightningArgumentParser,
     LightningCLI,
+    LRSchedulerTypeUnion,
+    ReduceLROnPlateau,
     SaveConfigCallback,
 )
 from pytorch_lightning.loggers import Logger, WandbLogger
+from torch.optim import Optimizer
+from torch.optim.lr_scheduler import CyclicLR, OneCycleLR
 
 
 class WandbSaveConfigCallback(SaveConfigCallback):
@@ -128,3 +132,27 @@ class CustomLightningCLI(LightningCLI):
         if self.datamodule is not None:
             fn_kwargs["datamodule"] = self.datamodule
         return fn_kwargs
+
+    @staticmethod
+    def configure_optimizers(
+        lightning_module: LightningModule, optimizer: Optimizer, lr_scheduler: Optional[LRSchedulerTypeUnion] = None
+    ) -> Any:
+        """Override to customize the :meth:`~pytorch_lightning.core.LightningModule.configure_optimizers` method.
+
+        Args:
+            lightning_module: A reference to the model.
+            optimizer: The optimizer.
+            lr_scheduler: The learning rate scheduler (if used).
+
+        """
+        if lr_scheduler is None:
+            return optimizer
+        if isinstance(lr_scheduler, ReduceLROnPlateau):
+            return {
+                "optimizer": optimizer,
+                "lr_scheduler": {"scheduler": lr_scheduler, "monitor": lr_scheduler.monitor},
+            }
+        if isinstance(lr_scheduler, (OneCycleLR, CyclicLR)):
+            # CyclicLR and OneCycleLR are step-based schedulers, where the default interval is "epoch".
+            return {"optimizer": optimizer, "lr_scheduler": {"scheduler": lr_scheduler, "interval": "step"}}
+        return [optimizer], [lr_scheduler]

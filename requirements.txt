@@ -27,3 +27,4 @@ tqdm
 rich
 pyrootutils
 python-dotenv
+debugpy

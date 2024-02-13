@@ -90,7 +90,7 @@ class CustomLightningCLI(LightningCLI):
             warnings.filterwarnings("ignore")
 
     def before_fit(self) -> None:
-        if self.config.fit.get("git_commit_before_fit"):
+        if self.config.fit.get("git_commit_before_fit") and not os.environ.get("DEBUG", False):
             logger = self.trainer.logger
             if isinstance(logger, WandbLogger):
                 version = getattr(logger, "version")
@@ -105,7 +105,7 @@ class CustomLightningCLI(LightningCLI):
                 os.system(f'git commit -am "{message}"')
 
     def after_fit(self) -> None:
-        if self.config.fit.get("test_after_fit"):
+        if self.config.fit.get("test_after_fit") and not os.environ.get("DEBUG", False):
             self._run_subcommand("test")
 
     def before_test(self) -> None:

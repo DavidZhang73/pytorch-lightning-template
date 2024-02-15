@@ -2,7 +2,7 @@
 seed_everything: 3407
 # Custom
 ignore_warnings: false # Ignore warnings
-test_after_fit: true # Apply test after fit finished
+test_after_fit: false # Apply test after fit finished
 git_commit_before_fit: false # Commit before fit
 # Trainer Config https://lightning.ai/docs/pytorch/stable/common/trainer.html
 trainer:
@@ -69,10 +69,6 @@ trainer:
     - class_path: LearningRateMonitor
       init_args:
         logging_interval: epoch
-    # https://lightning.ai/docs/pytorch/stable/api/pytorch_lightning.callbacks.RichModelSummary.html
-    - class_path: RichModelSummary
-      init_args:
-        max_depth: 1
 
   # Gradient Clipping https://lightning.ai/docs/pytorch/stable/common/trainer.html#gradient-clip-val
   gradient_clip_val: null

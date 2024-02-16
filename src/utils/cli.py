@@ -1,7 +1,14 @@
+import logging
 import os
+import re
+import shutil
+import subprocess
+import time
 import warnings
+from datetime import datetime
 from typing import Any, Optional
 
+from lightning_fabric.accelerators.cuda import CUDAAccelerator, find_usable_cuda_devices
 from lightning_fabric.utilities.cloud_io import get_filesystem
 from pytorch_lightning import LightningModule, Trainer
 from pytorch_lightning.cli import (
@@ -83,15 +90,79 @@ class CustomLightningCLI(LightningCLI):
         super().__init__(save_config_callback=save_config_callback, parser_kwargs=new_parser_kwargs, **kwargs)
 
     def add_arguments_to_parser(self, parser: LightningArgumentParser) -> None:
-        parser.add_argument("--ignore_warnings", default=False, type=bool, help="Ignore warnings")
-        parser.add_argument("--git_commit_before_fit", default=False, type=bool, help="Git commit before training")
+        parser.add_argument("--ignore_warnings", default=False, type=bool, help="Ignore warnings.")
+        parser.add_argument("--git_commit_before_fit", default=False, type=bool, help="Git commit before training.")
         parser.add_argument(
-            "--test_after_fit", default=False, type=bool, help="Run test on the best checkpoint after training"
+            "--test_after_fit", default=False, type=bool, help="Run test on the best checkpoint after training."
+        )
+        parser.add_argument(
+            "--wait_gpu",
+            default=True,
+            type=bool,
+            help="Wait for all GPUs to be available (no processes) before training.",
         )
 
     def before_instantiate_classes(self) -> None:
-        if self.config[self.subcommand].get("ignore_warnings"):
+        if self.config[self.subcommand].get("ignore_warnings") and not os.environ.get("DEBUG", False):
             warnings.filterwarnings("ignore")
+
+        if (
+            self.subcommand == "fit" and self.config[self.subcommand].get("wait_gpu")
+            # and not os.environ.get("DEBUG", False)
+        ):
+            # Only support Linux for now.
+            if os.name != "posix":
+                logging.warning(f"Only Linux is supported for now. {os.name} is not supported.")
+                return
+
+            # Check if the accelerator is set to "gpu", if not then return.
+            accelerator_type = self.config[self.subcommand]["trainer.accelerator"]
+            if accelerator_type != "gpu":
+                logging.warning(f"Only GPU is supported for now. {accelerator_type} is not supported.")
+                return
+
+            # Convert the devices to a list of integers, each representing a GPU device.
+            devices = self.config[self.subcommand]["trainer.devices"]
+            if isinstance(devices, int):
+                devices = find_usable_cuda_devices(num_devices=devices)
+            elif isinstance(devices, str) and devices == "auto":
+                count = CUDAAccelerator.auto_device_count()
+                devices = find_usable_cuda_devices(num_devices=count)
+            else:
+                raise ValueError(f"Invalid devices: {devices}")
+
+            # Check if nvidia-smi is installed and available.
+            nvidia_smi_path = shutil.which("nvidia-smi")
+            if nvidia_smi_path is None:
+                raise FileNotFoundError("nvidia-smi: command not found")
+
+            # check if they are available.
+            all_ready = False
+            while not all_ready:
+                result = subprocess.run(
+                    [
+                        nvidia_smi_path,
+                        "pmon",
+                        f"--id={','.join([str(d) for d in devices])}",
+                        "--count 1",
+                    ],
+                    encoding="utf-8",
+                    capture_output=True,
+                    check=True,
+                )
+                all_ready = True
+                for line in result.stdout.split("\n"):
+                    tokens = line.split()
+                    if tokens and tokens[2] == "C":
+                        gpu_id, pid, _type = tokens[0], tokens[1], tokens[2]
+                        print(
+                            f"[{datetime.now():%Y-%m-%d %H:%M:%S}] "
+                            f"GPU {gpu_id} is being used by process {pid}({_type}).\r",
+                            end="",
+                        )
+                        all_ready = False
+                        time.sleep(10)
+                        break
 
     def before_fit(self) -> None:
         if self.config.fit.get("git_commit_before_fit") and not os.environ.get("DEBUG", False):

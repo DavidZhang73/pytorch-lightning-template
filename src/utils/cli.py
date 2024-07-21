@@ -1,6 +1,6 @@
 import os
 import warnings
-from typing import Any, Optional
+from typing import Any, Dict, Optional, Type
 
 from lightning_fabric.utilities.cloud_io import get_filesystem
 from pytorch_lightning import LightningModule, Trainer
@@ -71,8 +71,8 @@ class WandbSaveConfigCallback(SaveConfigCallback):
 class CustomLightningCLI(LightningCLI):
     def __init__(
         self,
-        save_config_callback: type[SaveConfigCallback] = WandbSaveConfigCallback,
-        parser_kwargs: dict[str, Any] = None,
+        save_config_callback: Optional[Type[SaveConfigCallback]] = WandbSaveConfigCallback,
+        parser_kwargs: Optional[Dict[str, Any]] = None,
         **kwargs: Any,
     ) -> None:
         new_parser_kwargs = {
@@ -121,7 +121,7 @@ class CustomLightningCLI(LightningCLI):
             tested_ckpt_path = None
         self.config_init[self.config_init["subcommand"]]["ckpt_path"] = tested_ckpt_path
 
-    def _prepare_subcommand_kwargs(self, subcommand: str) -> dict[str, Any]:
+    def _prepare_subcommand_kwargs(self, subcommand: str) -> Dict[str, Any]:
         """Prepares the keyword arguments to pass to the subcommand to run."""
         fn_kwargs = {
             k: v

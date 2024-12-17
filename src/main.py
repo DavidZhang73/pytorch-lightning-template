@@ -9,5 +9,8 @@ if __name__ == "__main__":
     if os.environ.get("DEBUG", False):
         import debugpy
 
-        debugpy.connect(5678)
+        debugpy.listen(5678)
+        print("Waiting for debugger attach")
+        debugpy.wait_for_client()
+
     cli = CustomLightningCLI()

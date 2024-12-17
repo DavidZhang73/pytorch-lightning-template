@@ -8,3 +8,12 @@ select = [
     "UP", # pyupgrade
 ]
 ignore = ["F401"]
+extend-include = ["*.ipynb"]
+
+[tool.pyright]
+exclude = [
+    "**/__pycache__",
+    "data",
+    "logs"
+]
+typeCheckingMode = "off"

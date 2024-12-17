@@ -3,7 +3,7 @@ numpy
 matplotlib
 pandas
 scipy
-notebook
+ipykernel
 
 # --------- pytorch --------- #
 # torch

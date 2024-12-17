@@ -6,9 +6,9 @@ scipy
 notebook
 
 # --------- pytorch --------- #
-torch
-torchaudio
-torchvision
+# torch
+# torchaudio
+# torchvision
 pytorch-lightning
 jsonargparse[signatures]
 torchmetrics

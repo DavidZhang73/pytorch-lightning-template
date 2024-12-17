@@ -13,6 +13,9 @@ pyrootutils.setup_root(__file__, project_root_env_var=True, dotenv=False, python
 WANDB_PROJECT = "mnist"
 MODEL_CHECKPOINT_PATH = os.path.join("logs", "mnist")
 LOG_PATH = os.path.join("logs", "wandb")
+WHITE_LIST = [
+    "<RUN_ID>",
+]
 
 if __name__ == "__main__":
     # get run logs
@@ -57,6 +60,8 @@ if __name__ == "__main__":
     delete_count = 0
     for run_id, model_checkpoint_path in run_id_to_model_checkpoint_path_map.items():
         if run_id not in online_run_id_to_name_map:
+            if run_id in WHITE_LIST:
+                continue
             # print(f"Deleting {run_id}")
             shutil.rmtree(model_checkpoint_path)
             delete_count += 1

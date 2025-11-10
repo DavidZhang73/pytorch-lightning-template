@@ -2,18 +2,14 @@
 [tool.ruff]
 line-length = 120
 select = [
+    "I",  # isort
     "F",  # pyflakes
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
     "UP", # pyupgrade
 ]
 ignore = ["F401"]
-extend-include = ["*.ipynb"]
 
 [tool.pyright]
-exclude = [
-    "**/__pycache__",
-    "data",
-    "logs"
-]
+exclude = ["**/__pycache__", "data", "logs"]
 typeCheckingMode = "off"

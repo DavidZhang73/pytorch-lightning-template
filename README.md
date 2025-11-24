@@ -119,18 +119,11 @@ The advantages of using `Lightning`:
 git clone https://github.com/DavidZhang73/pytorch-lightning-template <project_name>
 cd <project_name>
 
-# [Optional] Create a conda virtual environment
-conda create -n <env_name> python=<3.8|3.9|3.10>
-conda activate <env_name>
-
-# [Optional] Use mamba instead of conda to speed up
-conda install mamba -n base -c conda-forge
-
-# [Optional] Install PyTorch according to the website to get GPU support
-# https://pytorch.org/get-started/
+# Install uv, https://docs.astral.sh/uv/getting-started/installation/
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Install dependencies
-pip install -r requirements.txt
+uv sync
 ```
 
 ### Configuration
@@ -202,9 +195,9 @@ This template implements a custom `CLI` (`CustomLightningCLI`) to achieve the fo
 - When starting the program, the default configuration file is automatically loaded.
 - After the test is completed, the `checkpoint_path` used for testing is printed.
 - Add some command line parameters:
-    - `--ignore_warnings` (default: `False`): Ignore all warnings.
-    - `--test_after_fit` (default: `False`): Automatically test after each training.
-    - `--git_commit_before_fit` (default: `False`): `git commit` before each training, the commit message is `{logger.name}_{logger.version}`, for `WandbLogger` only.
+  - `--ignore_warnings` (default: `False`): Ignore all warnings.
+  - `--test_after_fit` (default: `False`): Automatically test after each training.
+  - `--git_commit_before_fit` (default: `False`): `git commit` before each training, the commit message is `{logger.name}_{logger.version}`, for `WandbLogger` only.
 
 [CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_expert.html)
 

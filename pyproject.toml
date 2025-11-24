@@ -1,3 +1,45 @@
+[project]
+name = "pytorch-lightning-template"
+version = "0.1.0"
+description = "A template for simple deep learning projects using Lightning"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "autorootcwd>=1.0.1",
+    "debugpy>=1.8.17",
+    "flash-attn>=2.8.3",
+    "ipykernel>=7.1.0",
+    "ipywidgets>=8.1.8",
+    "jsonargparse[signatures]>=4.43.0",
+    "matplotlib>=3.10.7",
+    "opencv-python>=4.12.0.88",
+    "pandas>=2.3.3",
+    "pytorch-lightning>=2.5.6",
+    "pytorch3d>=0.7.8",
+    "torch>=2.9.1",
+    "torchmetrics>=1.8.2",
+    "torchvision>=0.24.1",
+    "tqdm>=4.67.1",
+    "transformers>=4.57.2",
+    "wandb>=0.23.0",
+]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+torchvision = [{ index = "pytorch-cu128" }]
+flash-attn = [{ index = "torch_packages_builder" }]
+pytorch3d = [{ index = "torch_packages_builder" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[[tool.uv.index]]
+name = "torch_packages_builder"
+url = "https://miropsota.github.io/torch_packages_builder"
+explicit = true
+
 # https://docs.astral.sh/ruff/configuration/
 [tool.ruff]
 line-length = 120

@@ -5,10 +5,8 @@ This script is used to delete unused offline wandb runs and model checkpoints.
 import os
 import shutil
 
-import pyrootutils
+import autorootcwd  # noqa: F401
 import wandb
-
-pyrootutils.setup_root(__file__, project_root_env_var=True, dotenv=False, pythonpath=True, cwd=True)
 
 WANDB_PROJECT = "mnist"
 MODEL_CHECKPOINT_PATH = os.path.join("logs", "mnist")

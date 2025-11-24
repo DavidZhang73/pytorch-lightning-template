@@ -32,20 +32,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum b
 
 ### Installation
 
-
 ```bash
 # clone project
 git clone https://github.com/YOUR_GITHUB_NAME/YOUR_PROJECT_NAME.git
 
-# create conda virtual environment
-conda create -n PROJECT_NAME python=<3.10|3.11|3.12>
-conda activate <env_name>
+# install uv, https://docs.astral.sh/uv/getting-started/installation/
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# [Optional] install pytorch according to the official guide to support GPU acceleration, etc.
-# https://pytorch.org/get-started/locally/
-
-# install requirements
-pip install -r requirements.txt
+# install dependencies
+uv sync
 ```
 
 ### Data Preparation
@@ -63,6 +58,7 @@ python src/main.py predict --config configs/data/mnist.yaml --config configs/mod
 ```
 
 ## Citation
+
 ```
 @inproceedings{Key,
   title={Your Title},

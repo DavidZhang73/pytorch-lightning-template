@@ -7,7 +7,7 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-一个使用Lightning全家桶的简单深度学习项目模板
+一个使用 Lightning 全家桶的简单深度学习项目模板
 
 [English](./README.md) | 中文
 
@@ -28,7 +28,7 @@
 2. 工程代码（Engineering code）
    这部分代码很重要的特点是：重复性强，比如说设置 Early Stopping、16 位精度、GPU 分布训练。在`Linghtning`中，这部分抽象为`pl.Trainer`类
 3. 非必要代码（Non-essential code）
-   这部分代码有利于实验的进行，但是和实验没有直接关系，甚至可以不使用。比如说检查梯度、给`TensorBoard`输出log。在`Linghtning`中，这部分抽象为`Callbacks`类，注册到`pl.Trainer`
+   这部分代码有利于实验的进行，但是和实验没有直接关系，甚至可以不使用。比如说检查梯度、给`TensorBoard`输出 log。在`Linghtning`中，这部分抽象为`Callbacks`类，注册到`pl.Trainer`
 
 `Lightning`的优势有：
 
@@ -116,18 +116,11 @@
 git clone https://github.com/DavidZhang73/pytorch-lightning-template <project_name>
 cd <project_name>
 
-# [可选] 创建conda虚拟环境
-conda create -n <env_name> python=<3.8|3.9|3.10>
-conda activate <env_name>
-
-# [可选] 使用mamba而不是conda
-conda install mamba -n base -c conda-forge
-
-# [可选] 根据官网教程安装pytorch以支持GPU加速等
-# https://pytorch.org/get-started/
+# 安装 uv, https://docs.astral.sh/uv/getting-started/installation/
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 安装依赖
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 配置
@@ -199,15 +192,15 @@ python src/main.py fit -c configs/data/mnist.yaml -c configs/model/simplenet.yam
 - 每次启动时，自动加载默认配置文件
 - 测试完成后，打印测试使用的`checkpoint_path`
 - 添加了一些命令行参数：
-    - `--ignore_warnings`（默认： `False`）：忽略全部警告
-    - `--test_after_fit`（默认： `False`）：每次训练完成后，自动测试一遍
-    - `--git_commit_before_fit`（默认： `False`）：每次训练之前`git commit`一下，`commit`的信息为`{logger.name}_{logger.version}`, 仅实现了对`WandbLogger`的适配
+  - `--ignore_warnings`（默认： `False`）：忽略全部警告
+  - `--test_after_fit`（默认： `False`）：每次训练完成后，自动测试一遍
+  - `--git_commit_before_fit`（默认： `False`）：每次训练之前`git commit`一下，`commit`的信息为`{logger.name}_{logger.version}`, 仅实现了对`WandbLogger`的适配
 
 [CONFIGURE HYPERPARAMETERS FROM THE CLI (EXPERT)](https://lightning.ai/docs/pytorch/stable/cli/lightning_cli_expert.html)
 
 ### 限制`numpy`的进程数量
 
-当运行在服务器上，尤其是CPU拥有很多核（>=24）时，可能遇到`numpy`的进程数量过多的问题，可能导致实验莫名其妙卡死，可以设置环境变量的方式（在`.env`文件中）限制`numpy`的进程数量。
+当运行在服务器上，尤其是 CPU 拥有很多核（>=24）时，可能遇到`numpy`的进程数量过多的问题，可能导致实验莫名其妙卡死，可以设置环境变量的方式（在`.env`文件中）限制`numpy`的进程数量。
 
 ```text
 OMP_NUM_THREADS=8

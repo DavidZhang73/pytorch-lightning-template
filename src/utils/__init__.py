@@ -1,4 +1,4 @@
-from src.utils.cli import CustomLightningCLI
+from .cli import CustomLightningCLI
 
 __all__ = [
     "CustomLightningCLI",

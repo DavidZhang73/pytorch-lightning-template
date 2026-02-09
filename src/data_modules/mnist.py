@@ -1,7 +1,7 @@
 # Adapted from: https://github.com/ashleve/lightning-hydra-template/blob/main/src/data/mnist_datamodule.py
 from typing import Any
 
-import pytorch_lightning as pl
+import lightning.pytorch as pl
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, random_split
 from torchvision.datasets import MNIST
 from torchvision.transforms import transforms as T

@@ -1,4 +1,4 @@
-from src.data_modules.mnist import MNISTDataModule
+from .mnist import MNISTDataModule
 
 __all__ = [
     "MNISTDataModule",

@@ -1,7 +1,7 @@
 # Adapted from: https://github.com/ashleve/lightning-hydra-template/blob/main/src/models/mnist_module.py
 from typing import Any
 
-import pytorch_lightning as pl
+import lightning.pytorch as pl
 import torch
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy

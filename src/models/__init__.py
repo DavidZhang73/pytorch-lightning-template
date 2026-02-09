@@ -1,4 +1,4 @@
-from src.models.simplenet import SimpleNet
+from .simplenet import SimpleNet
 
 __all__ = [
     "SimpleNet",

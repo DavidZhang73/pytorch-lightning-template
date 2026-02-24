@@ -11,10 +11,8 @@
     },
     "notebook.formatOnSave.enabled": true,
     "notebook.codeActionsOnSave": {
-        "source.fixAll": "never",
-        "source.organizeImports": "never",
-        "source.fixAll.ruff": "explicit",
-        "source.organizeImports.ruff": "explicit"
+        "notebook.source.fixAll.ruff": "explicit",
+        "notebook.source.organizeImports.ruff": "explicit"
     },
     "editor.rulers": [
         120

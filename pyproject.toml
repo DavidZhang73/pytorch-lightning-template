@@ -24,6 +24,9 @@ dependencies = [
     "wandb>=0.23.0",
 ]
 
+[dependency-groups]
+dev = ["ruff>=0.15.2"]
+
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu128" }]
 torchvision = [{ index = "pytorch-cu128" }]
@@ -43,15 +46,22 @@ explicit = true
 # https://docs.astral.sh/ruff/configuration/
 [tool.ruff]
 line-length = 120
-select = [
+lint.select = [
     "I",  # isort
     "F",  # pyflakes
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
     "UP", # pyupgrade
 ]
-ignore = ["F401"]
+lint.ignore = ["F401"]
 
 [tool.pyright]
-exclude = ["**/__pycache__", "data", "logs"]
+exclude = [
+    "**/__pycache__",
+    '**/node_modules',
+    '**/.*',
+    '.venv',
+    "data",
+    "logs",
+]
 typeCheckingMode = "off"

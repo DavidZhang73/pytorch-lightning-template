@@ -104,7 +104,7 @@
 ├── README_PROJECT.md        # 项目说明模板
 ├── README.md                # 本项目说明
 ├── README_ZH.md             # 本项目说明（中文）
-└── requirements.txt         # 依赖列表
+└── uv.lock                  # 跨平台依赖锁文件
 ```
 
 ## 使用
@@ -122,6 +122,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # 安装依赖
 uv sync
 ```
+
+项目需要 Python 3.12。在 Linux x86-64 上，`uv sync` 会安装 PyTorch 2.11、Torchvision、
+FlashAttention 2 和 PyTorch3D 的 CUDA 13.0 构建。FlashAttention wheel 是
+[社区构建](https://github.com/Dao-AILab/flash-attention/issues/2442)，不是官方发布资产。
+在 macOS 上，uv 会安装 PyPI 中支持 CPU/MPS 的 PyTorch 和 Torchvision，并跳过仅支持 CUDA 的扩展。
 
 ### 配置
 

@@ -3,39 +3,39 @@ name = "pytorch-lightning-template"
 version = "0.1.0"
 description = "A template for simple deep learning projects using Lightning"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<3.13"
 dependencies = [
     "autorootcwd>=1.0.1",
-    "debugpy>=1.8.17",
-    "flash-attn>=2.8.3",
-    "ipykernel>=7.1.0",
-    "ipywidgets>=8.1.8",
-    "jsonargparse[signatures]>=4.43.0",
-    "matplotlib>=3.10.7",
-    "opencv-python>=4.12.0.88",
-    "pandas>=2.3.3",
-    "lightning>=2.6.1",
-    "pytorch3d>=0.7.8",
-    "torch>=2.9.1",
-    "torchmetrics>=1.8.2",
-    "torchvision>=0.24.1",
-    "tqdm>=4.67.1",
-    "transformers>=4.57.2",
-    "wandb>=0.23.0",
+    "debugpy>=1.8.21",
+    "flash-attn==2.8.3; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "ipykernel>=7.3.0",
+    "ipywidgets>=8.1.9",
+    "jsonargparse[signatures]>=4.50.0",
+    "lightning>=2.6.5",
+    "matplotlib>=3.11.1",
+    "opencv-python>=5.0.0.93",
+    "pandas>=3.0.5",
+    "pytorch3d==0.7.9+d9839a9pt2.11.0cu130; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch==2.11.0",
+    "torchmetrics>=1.9.0",
+    "torchvision==0.26.0",
+    "tqdm>=4.70.0",
+    "transformers>=5.15.0",
+    "wandb>=0.28.2",
 ]
 
 [dependency-groups]
-dev = ["ruff>=0.15.2"]
+dev = ["ruff>=0.16.3"]
 
 [tool.uv.sources]
-torch = [{ index = "pytorch-cu128" }]
-torchvision = [{ index = "pytorch-cu128" }]
-flash-attn = [{ index = "torch_packages_builder" }]
-pytorch3d = [{ index = "torch_packages_builder" }]
+torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }]
+torchvision = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }]
+flash-attn = { url = "https://github.com/adithyaxx/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3%2Bcu13torch2.11cxx11abiTRUE-cp312-cp312-linux_x86_64.whl" }
+pytorch3d = { index = "torch_packages_builder" }
 
 [[tool.uv.index]]
-name = "pytorch-cu128"
-url = "https://download.pytorch.org/whl/cu128"
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 
 [[tool.uv.index]]

@@ -107,7 +107,7 @@ The advantages of using `Lightning`:
 ├── README.md                # Project documentation
 ├── README_PROJECT.md        # Project documentation template
 ├── README_ZH.md             # Project documentation in Chinese
-└── requirements.txt         # Dependency list
+└── uv.lock                  # Cross-platform dependency lock file
 ```
 
 ## Usage
@@ -125,6 +125,11 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Install dependencies
 uv sync
 ```
+
+Python 3.12 is required. On Linux x86-64, `uv sync` installs the CUDA 13.0 builds of PyTorch 2.11,
+Torchvision, FlashAttention 2, and PyTorch3D. The FlashAttention wheel is a
+[community build](https://github.com/Dao-AILab/flash-attention/issues/2442), not an official release asset.
+On macOS, uv installs the PyPI CPU/MPS builds of PyTorch and Torchvision and skips the CUDA-only extensions.
 
 ### Configuration
 

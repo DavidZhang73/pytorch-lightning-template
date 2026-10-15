@@ -11,7 +11,7 @@ dependencies = [
     "ipykernel>=7.3.0",
     "ipywidgets>=8.1.9",
     "jsonargparse[signatures]>=4.50.0",
-    "lightning>=2.6.5",
+    "lightning>=2.6.6",
     "matplotlib>=3.11.1",
     "opencv-python>=5.0.0.93",
     "pandas>=3.0.5",
@@ -26,6 +26,9 @@ dependencies = [
 
 [dependency-groups]
 dev = ["ruff>=0.16.3"]
+
+[tool.uv]
+constraint-dependencies = ["urllib3>=2.8.0"]
 
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }]

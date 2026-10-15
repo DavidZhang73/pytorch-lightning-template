@@ -28,7 +28,7 @@ dependencies = [
 dev = ["ruff>=0.16.3"]
 
 [tool.uv]
-constraint-dependencies = ["urllib3>=2.8.0"]
+constraint-dependencies = ["urllib3>=2.8.0", "tornado>=6.5.9", "multidict>=6.9.1"]
 
 [tool.uv.sources]
 torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux' and platform_machine == 'x86_64'" }]
